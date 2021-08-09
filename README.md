@@ -3,3 +3,4 @@ Why discord bot (BETA, NOT FINISHED) If this github is public, that means the bo
 Anyways, hope you like this ideia!
 
 [![Code Grade](https://www.code-inspector.com/project/26228/status/svg)](https://frontend.code-inspector.com/public/project/26228/why2/dashboard)
+[![Code Quality Score](https://www.code-inspector.com/project/26228/score/svg)](https://frontend.code-inspector.com/public/project/26228/why2/dashboard)

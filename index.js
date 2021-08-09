@@ -26,10 +26,10 @@ client.on("message", async (message) => {
   let prefix = db.get(`prefix_${message.guild.id}`);
   if(!prefix) {
     prefix = "!"
-  };
+  }
 	if (!message.content.toLowerCase().startsWith(prefix) || message.author.bot || message.content.includes('@here') || message.content.includes('@everyone')) {
 		return;
-  };
+  }
 
   //defining what is a command
 	const args = message.content

@@ -62,7 +62,7 @@ client.on("message", async message => {
       message.author.send(embed)
       }
     }
-    else if(datecheck != 21) {
+    else {
     let cashdelivered = db.get(`cashvip_${message.author.id}`)
     if(cashdelivered === true) {
     db.delete(`cashvip_${message.author.id}`)
@@ -85,7 +85,7 @@ client.on("message", async message => {
       message.author.send(embed)
       }
     }
-    else if(datecheck != 21) {
+    else {
     let cashdelivered = db.get(`cashvip_${message.author.id}`)
     if(cashdelivered === true) {
     db.delete(`cashvip_${message.author.id}`)
@@ -108,7 +108,7 @@ client.on("message", async message => {
       message.author.send(embed)
       }
     }
-    else if(datecheck != 21) {
+    else {
     let cashdelivered = db.get(`cashvip_${message.author.id}`)
     if(cashdelivered === true) {
     db.delete(`cashvip_${message.author.id}`)
@@ -131,7 +131,7 @@ client.on("message", async message => {
       message.author.send(embed)
       }
     }
-    else if(datecheck != 21) {
+    else {
     let cashdelivered = db.get(`cashvip_${message.author.id}`)
     if(cashdelivered === true) {
     db.delete(`cashvip_${message.author.id}`)
@@ -154,7 +154,7 @@ client.on("message", async message => {
       message.author.send(embed)
       }
     }
-    else if(datecheck != 21) {
+    else {
     let cashdelivered = db.get(`cashvip_${message.author.id}`)
     if(cashdelivered === true) {
     db.delete(`cashvip_${message.author.id}`)

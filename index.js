@@ -267,7 +267,6 @@ client.on("message", async message => {
     message.channel.send(moneyembed)
   }
   if(command.toLowerCase() === "shop") {
-  let date = moment(new Date()).format("DD/MM/YYYY")
   let shopembed = new Discord.MessageEmbed()
   .setTitle(`:shopping_cart: Shop`)
   .setDescription(`<:VipNormal:873217193989517322> VIP - \`\`1.500.000\`\` Coins / \`\`20\`\` Cash :coin:`)
@@ -404,7 +403,7 @@ client.on("message", async message => {
           }
         })
         .catch(collected => {
-            message.channel.send('You took too long... what is the point of trying to upgrade to then ignore me');
+            message.channel.send(`You took too long... what is the point of trying to upgrade to then ignore me \n${collected}`)
         });
     })
     }
@@ -462,7 +461,7 @@ client.on("message", async message => {
           }
         })
         .catch(collected => {
-            message.channel.send('You took too long... what is the point of trying to upgrade to then ignore me');
+            message.channel.send(`You took too long... what is the point of trying to upgrade to then ignore me \n${collected}`);
         });
     })
     }
@@ -520,7 +519,7 @@ client.on("message", async message => {
           }
         })
         .catch(collected => {
-            message.channel.send('You took too long... what is the point of trying to upgrade to then ignore me');
+            message.channel.send(`You took too long... what is the point of trying to upgrade to then ignore me \n${collected}`);
         });
     })
     }

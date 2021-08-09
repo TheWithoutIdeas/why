@@ -98,7 +98,7 @@ client.on("message", async (message) => {
     let cashdelivered = db.get(`cashvip_${message.author.id}`);
     if(datecheck = 21) {
       if(!cashdelivered) {
-      db.add(`cash_${message.author.id}`, 45)
+      db.add(`cash_${message.author.id}`, 45);
       db.set(`cashvip_${message.author.id}`, true)
       let embed = new Discord.MessageEmbed()
       .setTitle("You got your cash delivered!")
@@ -178,7 +178,7 @@ client.on("message", async (message) => {
     };
     if(ping > 150 && ping <= 500) {
       pong.setFooter("Not so fast but it answers the commands")
-      pong.setColor("YELLOW")
+      pong.setColor("YELLOW");
     };
     if(ping > 500) {
       pong.setFooter("Really slow. Please contact a developer if this continues")
@@ -205,7 +205,7 @@ client.on("message", async (message) => {
   let money = Math.floor(Math.random() * 1000) + 500;
   let embed = new Discord.MessageEmbed()
   .setTitle(`You worked as a ${work} and won ${money} Coins`)
-  .setColor("PURPLE")
+  .setColor("PURPLE");
   if(work === "Streamer") {
     embed.setThumbnail(`https://cdn.discordapp.com/attachments/872503326296641568/873336164986269726/Why_1.png`)
   }
@@ -215,43 +215,43 @@ client.on("message", async (message) => {
   if(command.toLowerCase() === "balance" || command.toLowerCase() === "bal" || command.toLowerCase() === "b" || command.toLowerCase() === "money" || command.toLowerCase() === "m") {
     let user = message.mentions.users.first();
     if(!user) {
-      user = message.author
+      user = message.author;
     };
     let money = db.get(`money_${user.id}`);
     if(!money) {
-      money = 0
+      money = 0;
     };
     let inventoryvalue = db.get(`invvalue_${user.id}`);
     if(!inventoryvalue) {
-      inventoryvalue = 0
+      inventoryvalue = 0;
     };
     let level = db.get(`mlevel_${user.id}`);
     if(!level) {
-      level = 1
+      level = 1;
     };
     let xp = db.get(`mxp_${user.id}`);
     if(!xp) {
-      xp = 0
+      xp = 0;
     };
     let levelrate = db.get(`mlevelrate_${message.guild.id}`);
     let xpnecessary = db.get(`mxpnecessary_${message.guild.id}`);
     if(!xpnecessary) {
-      xpnecessary = 150
+      xpnecessary = 150;
     };
     if(!levelrate) {
-      levelrate = xpnecessary * 1
+      levelrate = xpnecessary * 1;
     };
-    let cash = db.get(`cash_${user.id}`)
+    let cash = db.get(`cash_${user.id}`);
     if(!cash) {
       cash = 0
     };
-    let credit = db.get(`credit_${user.id}`)
+    let credit = db.get(`credit_${user.id}`);
     if(!credit) {
       credit = 0
     };
     let moneyembed = new Discord.MessageEmbed()
     .setTitle(`${user.username}'s net worth`)
-    .setDescription(`**Note: items are valued. Please do not try to sell to anyone with a different value**`)
+    .setDescription("**Note: items are valued. Please do not try to sell to anyone with a different value**")
     .addFields(
       { name: ":money_with_wings: **Coins:**", value: `\`\`${money}\`\``, inline: true},
       { name: ":credit_card: **Bank Credit:**", value: `\`\`${credit}\`\``, inline: true},
@@ -268,32 +268,32 @@ client.on("message", async (message) => {
   };
   if(command.toLowerCase() === "shop") {
   let shopembed = new Discord.MessageEmbed()
-  .setTitle(`:shopping_cart: Shop`)
-  .setDescription(`<:VipNormal:873217193989517322> VIP - \`\`1.500.000\`\` Coins / \`\`20\`\` Cash :coin:`)
+  .setTitle(":shopping_cart: Shop")
+  .setDescription("<:VipNormal:873217193989517322> VIP - \`\`1.500.000\`\` Coins / \`\`20\`\` Cash :coin:")
   .setThumbnail(message.author.displayAvatarURL({dynamic : true}))
-  .setFooter(`Page 1`)
-  .setColor("YELLOW")
-  message.channel.send(shopembed)
+  .setFooter("Page 1")
+  .setColor("YELLOW");
+  message.channel.send(shopembed);
   }
   if(command.toLowerCase() === "vip") {
-    let developer = db.get(`developer_${message.author.id}`)
+    let developer = db.get(`developer_${message.author.id}`);
     if(developer === true || message.author.id === "861376659597164545") {
-    let user = message.mentions.users.first()
+    let user = message.mentions.users.first();
     if(!user) {
-      user = message.author
-    }
-    let vip = db.get(`vip_${user.id}`)
-    let vipgold = db.get(`vipgold_${user.id}`)
-    let vipdiamond = db.get(`vipdiamond_${user.id}`)
-    let cashvip = db.get(`cashvip_${user.id}`)
+      user = message.author;
+    };
+    let vip = db.get(`vip_${user.id}`);
+    let vipgold = db.get(`vipgold_${user.id}`);
+    let vipdiamond = db.get(`vipdiamond_${user.id}`);
+    let cashvip = db.get(`cashvip_${user.id}`);
     if(!cashvip) {
-      cashvip = "ready for next month"
-    }
+      cashvip = "ready for next month";
+    };
     if(cashvip === true) {
-      cashvip = "this user collected their cash today, so they need to wait 1 month"
-    }
-    let vipp = "Not a vip"
-    let color = "BLUE"
+      cashvip = "this user collected their cash today, so they need to wait 1 month";
+    };
+    let vipp = "Not a vip";
+    let color = "BLUE";
     if(vip === true) {
       vipp = "Normal VIP"
       color = "RED"

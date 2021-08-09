@@ -295,10 +295,6 @@ client.on("message", async message => {
     }
     let vipp = "Not a vip"
     let color = "BLUE"
-    if(!vip && !vipgold && !vipdiamond) {
-      vipp = vipp
-      color = color
-    }
     if(vip === true) {
       vipp = "Normal VIP"
       color = "RED"
@@ -332,10 +328,6 @@ client.on("message", async message => {
     let vipdiamond = db.get(`vipdiamond_${author.id}`)
     let vipp = "Not a vip"
     let color = "BLUE"
-    if(!vip && !vipgold && !vipdiamond) {
-      vipp = vipp
-      color = color
-    }
     if(vip === true) {
       vipp = "Normal VIP"
       color = "RED"

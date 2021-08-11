@@ -834,37 +834,6 @@ client.on("message", async (message) => {
   }
 })
 
-//vip give
-client.on('guildMemberUpdate', async (oldMember, newMember) => {
-  if (oldMember.premiumSince !== newMember.premiumSince) {
-    if(newMember.roles.has("872503325747204107")) {
-    let embed = new Discord.MessageEmbed()
-    .setTitle(`Boost!`)
-    .setDescription(`Someone just boosted the server! \nAs a reward, you got some items and now you have perks! Thank you so much for boosting our server and liking our bot, this means a lot to the developers to continue! :D`)
-    .setColor("PURPLE")
-    let vip = db.get(`vip_${newMember.id}`)
-    let vipgold = db.get(`vipgold_${newMember.id}`)
-    let vipdiamond = db.get(`vipdiamond_${newMember.id}`)
-    if(!vip) {
-    db.set(`vip_${newMember.id}`, true)
-    }
-    if(vip === true) {
-    db.set(`vipgold_${newMember.id}`, true)
-    }
-    if(vipgold === true) {
-    db.set(`vipdiamond_${newMember.id}`, true)
-    }
-    if(vipdiamond === true) {
-    db.add(`cash_${newMember.id}`, 25)
-    }
-    db.add(`cash_${newMember.id}`, 75)
-    newMember.guild.channels.get("872503326296641568").send(embed);
-  }
-  else {
-    return
-  }
-  }
-});
 //Bot started well?
 app.listen(3000, () => {
   console.log("\x1b[32m%s\x1b[0m", 'Bot started successfully');

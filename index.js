@@ -3,9 +3,7 @@ const express = require("express");
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send("Yeah i guess")
-});
+app.use(express.static("public"));
 
 //packages
 const Discord = require("discord.js");

@@ -5,6 +5,11 @@ const app = express();
 
 app.use(express.static("public"));
 
+//404
+app.get("*", function(req, res) {
+  res.status(404).sendFile(__dirname + "/error/index.html")
+})
+
 //packages
 const Discord = require("discord.js");
 require("discord-reply");
@@ -832,15 +837,10 @@ client.on("message", async (message) => {
   }
 })
 
-//Bot started well?
+//Bot started successfully?
 app.listen(3000, () => {
   console.log("\x1b[32m%s\x1b[0m", 'Bot started successfully');
 });
-
-//404
-app.get("*", function(req, res) {
-  res.status(404).sendFile(__dirname + "/error/index.html")
-})
 
 //bot login
 const token = process.env['BotKey']

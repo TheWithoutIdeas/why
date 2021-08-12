@@ -272,7 +272,7 @@ client.on("message", async (message) => {
   if(command.toLowerCase() === "shop") {
   let shopembed = new Discord.MessageEmbed()
   .setTitle(":shopping_cart: Shop")
-  .setDescription("<:VipNormal:873217193989517322> VIP - \`\`1.500.000\`\` Coins / \`\`20\`\` Cash :coin:")
+  .setDescription("<:VipNormal:873217193989517322> VIP - \`\`5.500.000\`\` Coins / \`\`20\`\` Cash :coin:")
   .setThumbnail(message.author.displayAvatarURL({dynamic : true}))
   .setFooter("Page 1")
   .setColor("YELLOW");
@@ -360,7 +360,7 @@ client.on("message", async (message) => {
       let filter = m => m.author.id === message.author.id
       let embed = new Discord.MessageEmbed()
       .setTitle(`Upgrade to vip?`)
-      .setDescription(`Would you like to upgrade to vip? It will cost 1.500.000$ or 20 Cash (in case you do not have 1,5M$, the bot will check your cash and if you have 20 cash, it will upgrade automatically)`)
+      .setDescription(`Would you like to upgrade to vip? It will cost 5.500.000$ or 20 Cash (in case you do not have 5,5M$, the bot will check your cash and if you have 20 cash, it will upgrade automatically)`)
       .setColor("#ff3b21")
       .setFooter(`Yes / No`)
       message.channel.send(embed).then(() => {
@@ -374,16 +374,17 @@ client.on("message", async (message) => {
           if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
             let money = db.get(`money_${user.id}`)
             let cash = db.get(`cash_${user.id}`)
-            if(money >= 1500000) {
-              db.subtract(`money_${message.author.id}`, 1500000)
+            if(money >= 5500000) {
+              db.subtract(`money_${message.author.id}`, 5500000)
               db.set(`vip_${message.author.id}`, true)
               let success = new Discord.MessageEmbed()
               .setTitle(`Successfull Upgrade!`)
               .setColor("GREEN")
               .setDescription(`You are now VIP! \nIf you want to know more info about VIP and it's perks and rewards, do !help vip`)
               message.channel.send(success)
+              db.add(`cash_${message.author.id}`, 15)
             }
-            else if(money <= 1500000 && cash >= 20) {
+            else if(money <= 5500000 && cash >= 20) {
               db.subtract(`cash_${message.author.id}`, 20)
               db.set(`vip_${message.author.id}`, true)
               let success = new Discord.MessageEmbed()
@@ -391,6 +392,7 @@ client.on("message", async (message) => {
               .setColor("GREEN")
               .setDescription(`You are now VIP! \nIf you want to know more info about VIP and it's perks and rewards, do !help vip`)
               message.channel.send(success)
+              db.add(`money_${message.author.id}`, 1500000)
             }
             else {
               let embed = new Discord.MessageEmbed()
@@ -416,7 +418,7 @@ client.on("message", async (message) => {
       let filter = m => m.author.id === message.author.id
       let embed = new Discord.MessageEmbed()
       .setTitle(`Upgrade to vip gold?`)
-      .setDescription(`Would you like to upgrade to vip gold? It will cost 3.500.000$ or 40 Cash (in case you do not have 3,5M$, the bot will check your cash and if you have 40 cash, it will upgrade automatically)`)
+      .setDescription(`Would you like to upgrade to vip gold? It will cost 7.500.000$ or 40 Cash (in case you do not have 7,5M$, the bot will check your cash and if you have 40 cash, it will upgrade automatically)`)
       .setColor("#ff3b21")
       .setFooter(`Yes / No`)
       message.channel.send(embed).then(() => {
@@ -430,8 +432,8 @@ client.on("message", async (message) => {
           if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
             let money = db.get(`money_${user.id}`)
             let cash = db.get(`cash_${user.id}`)
-            if(money >= 3500000) {
-              db.subtract(`money_${message.author.id}`, 3500000)
+            if(money >= 7500000) {
+              db.subtract(`money_${message.author.id}`, 7500000)
               db.set(`vipgold_${message.author.id}`, true)
               db.delete(`vip_${message.author.id}`)
               let success = new Discord.MessageEmbed()
@@ -439,8 +441,9 @@ client.on("message", async (message) => {
               .setColor("GREEN")
               .setDescription(`You are now VIP Gold! \nIf you want to know more info about VIP Gold and it's perks and rewards, do !help vipgold`)
               message.channel.send(success)
+              db.add(`cash_${message.author.id}`, 25)
             }
-            else if(money <= 3500000 && cash >= 40) {
+            else if(money <= 7500000 && cash >= 40) {
               db.subtract(`cash_${message.author.id}`, 40)
               db.set(`vipgold_${message.author.id}`, true)
               db.delete(`vip_${message.author.id}`)
@@ -449,6 +452,7 @@ client.on("message", async (message) => {
               .setColor("GREEN")
               .setDescription(`You are now VIP Gold! \nIf you want to know more info about VIP Gold and it's perks and rewards, do !help vipgold`)
               message.channel.send(success)
+              db.add(`money_${message.author.id}`, 2500000)
             }
             else {
               let embed = new Discord.MessageEmbed()
@@ -474,7 +478,7 @@ client.on("message", async (message) => {
       let filter = m => m.author.id === message.author.id
       let embed = new Discord.MessageEmbed()
       .setTitle(`Upgrade to vip diamond?`)
-      .setDescription(`Would you like to upgrade to vip diamond? It will cost 6.000.000$ or 60 Cash (in case you do not have 6M$, the bot will check your cash and if you have 60 cash, it will upgrade automatically)`)
+      .setDescription(`Would you like to upgrade to vip diamond? It will cost 12.000.000$ or 60 Cash (in case you do not have 12M$, the bot will check your cash and if you have 60 cash, it will upgrade automatically)`)
       .setColor("#ff3b21")
       .setFooter(`Yes / No`)
       message.channel.send(embed).then(() => {
@@ -488,8 +492,8 @@ client.on("message", async (message) => {
           if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') {
             let money = db.get(`money_${user.id}`)
             let cash = db.get(`cash_${user.id}`)
-            if(money >= 6000000) {
-              db.subtract(`money_${message.author.id}`, 6000000)
+            if(money >= 12000000) {
+              db.subtract(`money_${message.author.id}`, 12000000)
               db.set(`vipdiamond_${message.author.id}`, true)
               db.delete(`vipgold_${message.author.id}`)
               let success = new Discord.MessageEmbed()
@@ -497,8 +501,9 @@ client.on("message", async (message) => {
               .setColor("GREEN")
               .setDescription(`You are now VIP Diamond! \nIf you want to know more info about VIP Diamond and it's perks and rewards, do !help vipdiamond`)
               message.channel.send(success)
+              db.add(`cash_${message.author.id}`, 40)
             }
-            else if(money <= 6000000 && cash >= 60) {
+            else if(money <= 12000000 && cash >= 60) {
               db.subtract(`cash_${message.author.id}`, 60)
               db.set(`vipdiamond_${message.author.id}`, true)
               db.delete(`vipgold_${message.author.id}`)
@@ -507,6 +512,7 @@ client.on("message", async (message) => {
               .setColor("GREEN")
               .setDescription(`You are now VIP Diamond! \nIf you want to know more info about VIP Diamond and it's perks and rewards, do !help vipdiamond`)
               message.channel.send(success)
+              db.add(`money_${message.author.id}`, 4500000)
             }
             else {
               let embed = new Discord.MessageEmbed()
@@ -533,6 +539,121 @@ client.on("message", async (message) => {
       .setTitle(`Why?`)
       .setDescription(`You already have maximum level of vip... why would you want to upgrade from that?`)
       .setColor("RED")
+      .setThumbnail(`https://cdn.discordapp.com/attachments/872514306346999878/872514337821044746/sad_face_1_adobespark.png`)
+      message.channel.send(embed)
+    }
+  }
+  if(command.toLowerCase() === "devgive") {
+    let author = message.author
+    let developer = db.get(`developer_${author.id}`)
+    if(developer === true || message.author.id === "861376659597164545") {
+      let thing = args[0]
+      if(!thing) {
+      let embed = new Discord.MessageEmbed()
+      .setTitle(`what`)
+      .setDescription(`You did not specify what to give.`)
+      .setColor("RED")
+      .setThumbnail(`https://cdn.discordapp.com/attachments/872514306346999878/872514337821044746/sad_face_1_adobespark.png`)
+      message.channel.send(embed)
+      }
+      else {
+        let user = message.mentions.users.first()
+        if(!user) {
+          user = message.author.id
+        }
+        let profiletag = args[2]
+        let searchuser = db.get(`searchwithprofiletag_${profiletag}`)
+        let usertwo = await client.users.fetch(searchuser)
+        if(isNaN(profiletag) && !message.mentions.users.first()) {
+          let embed = new Discord.MessageEmbed()
+          .setTitle(`User Not Found!`)
+          .setDescription(`There was no profile tag specified so i couldn't find the user, sorry :(`)
+          .setColor("RED")
+          .setFooter(`Developer Tools`)
+          message.channel.send(embed)
+        }
+        if(thing.toLowerCase() === "vip") {
+          if(args[1].toLowerCase() === "normal") {
+            db.set(`vip_${searchuser}`, true)
+            db.add(`cash_${searchuser}`, 15)
+            db.delete(`vipgold_${searchuser}`)
+            db.delete(`vipdiamond_${searchuser}`)
+            let embed = new Discord.MessageEmbed()
+            .setTitle(`Successfully gave vip to ${usertwo.tag}`)
+            .setDescription(`Enjoy the perks and rewards! <3 ${usertwo.tag}`)
+            .setColor("#e02f64")
+            .setThumbnail(`https://cdn.discordapp.com/attachments/872514306346999878/875481143556849745/Vip_Normal.png`)
+            .setFooter(`Developer Tools`)
+            message.channel.send(embed)
+            let devlog = db.get(`devlog_${client.id}`)
+            if(!devlog) {
+              devlog = 1
+            }
+            let embedforglogs = new Discord.MessageEmbed()
+            .setTitle(`Dev log #${devlog}`)
+            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip normal to: ${usertwo.tag}`)
+            .setColor("GREEN")
+            let globallogs = client.channels.cache.get("872590517735682058")
+            globallogs.send(embedforglogs)
+            db.add(`devlog_${client.id}`, 1)
+          }
+          else if(args[1].toLowerCase() === "gold") {
+            db.set(`vipgold_${searchuser}`, true)
+            db.add(`cash_${searchuser}`, 25)
+            db.delete(`vip_${searchuser}`)
+            db.delete(`vipdiamond_${searchuser}`)
+            let embed = new Discord.MessageEmbed()
+            .setTitle(`Successfully gave vip gold to ${usertwo.tag}`)
+            .setDescription(`Enjoy the perks and rewards! <3 ${usertwo.tag}`)
+            .setColor("#f7a43e")
+            .setThumbnail(`https://cdn.discordapp.com/attachments/872514306346999878/875487292410724392/Vip_gold.png`)
+            .setFooter(`Developer Tools`)
+            message.channel.send(embed)
+            let devlog = db.get(`devlog_${client.id}`)
+            if(!devlog) {
+              devlog = 1
+            }
+            let embedforglogs = new Discord.MessageEmbed()
+            .setTitle(`Dev log #${devlog}`)
+            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip gold to: ${usertwo.tag}`)
+            .setColor("GREEN")
+            let globallogs = client.channels.cache.get("872590517735682058")
+            globallogs.send(embedforglogs)
+            db.add(`devlog_${client.id}`, 1)
+          }
+          else if(args[1].toLowerCase() === "diamond") {
+            db.set(`vipdiamond_${searchuser}`, true)
+            db.add(`cash_${searchuser}`, 40)
+            db.delete(`vip_${searchuser}`)
+            db.delete(`vipgold_${searchuser}`)
+            let embed = new Discord.MessageEmbed()
+            .setTitle(`Successfully gave vip diamond to ${usertwo.tag}`)
+            .setDescription(`Enjoy the perks and rewards! <3 ${usertwo.tag}`)
+            .setColor("#3ef4f7")
+            .setFooter(`Developer Tools`)
+            .setThumbnail(`https://cdn.discordapp.com/attachments/872514306346999878/875487671001174036/Vip.png`)
+            message.channel.send(embed)
+            let devlog = db.get(`devlog_${client.id}`)
+            if(!devlog) {
+              devlog = 1
+            }
+            let embedforglogs = new Discord.MessageEmbed()
+            .setTitle(`Dev log #${devlog}`)
+            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip diamond to: ${usertwo.tag}`)
+            .setColor("GREEN")
+            let globallogs = client.channels.cache.get("872590517735682058")
+            globallogs.send(embedforglogs)
+            db.add(`devlog_${client.id}`, 1)
+          }
+        }
+      }
+    }
+    else {
+      let embed = new Discord.MessageEmbed()
+      .setTitle(`N o`)
+      .setDescription(`You don't have permissions to use this command. \nOnly developers can use it.`)
+      .setColor("RED")
+      .setFooter(`If this is an error please contact the owner or a grand-developer`)
       .setThumbnail(`https://cdn.discordapp.com/attachments/872514306346999878/872514337821044746/sad_face_1_adobespark.png`)
       message.channel.send(embed)
     }
@@ -791,10 +912,11 @@ client.on("message", async (message) => {
     if(!prefixhelp) {
       prefixhelp = "!"
     }
+    let owner = db.get(`owner_${client.id}`)
     if(!commandcheck) {
     let help = new Discord.MessageEmbed()
     .setTitle(`The most helpfull embed`)
-    .setDescription(`:wrench: Moderation - \`\`${prefixhelp}setprefix\`\` \n\n:moneybag: Economy - \`\`${prefixhelp}money\`\`, \`\`${prefixhelp}profile\`\` (you can mention someone or use tags, make sure you only use the number of the tag though)\n\n**More soon...** \n\n**__Team__** \n- ABigDisappointment#2294 [Owner]`)
+    .setDescription(`:wrench: Moderation - \`\`${prefixhelp}setprefix\`\` \n\n:moneybag: Economy - \`\`${prefixhelp}money\`\`, \`\`${prefixhelp}profile\`\` (you can mention someone or use tags, make sure you only use the number of the tag though)\n\n**More soon...** \n\n**__Team__** \n- ${owner} [Owner]`)
     .setURL(`https://discord.gg/stAxsb4XhA`)
     .setFooter(`If you need help with a specific command, just type ${prefixhelp}help <command / item / money variable (example: cash)>`)
     .setColor("#ff8a54")
@@ -837,9 +959,12 @@ client.on("message", async (message) => {
   }
 })
 
-//Bot started successfully?
+//Bot and website started successfully?
 app.listen(3000, () => {
   console.log("\x1b[32m%s\x1b[0m", 'Bot started successfully');
+  console.log("\x1b[33m%s\x1b[0m", 'Website loaded successfully');
+  let owner = db.get(`owner_${client.id}`)
+  console.log("\x1b[31m%s\x1b[0m", `Owner - ${owner}`)
 });
 
 //bot login

@@ -2,6 +2,8 @@ body {
   background-color: #313131;
 }
 
-div {
-  display: block;
+div.image {
+  display: flex;
+  justify-content: center;
+  width: 250px;
 }

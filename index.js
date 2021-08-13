@@ -557,14 +557,10 @@ client.on("message", async (message) => {
       message.channel.send(embed)
       }
       else {
-        let user = message.mentions.users.first()
-        if(!user) {
-          user = message.author.id
-        }
         let profiletag = args[2]
         let searchuser = db.get(`searchwithprofiletag_${profiletag}`)
         let usertwo = await client.users.fetch(searchuser)
-        if(isNaN(profiletag) && !message.mentions.users.first()) {
+        if(isNaN(profiletag)) {
           let embed = new Discord.MessageEmbed()
           .setTitle(`User Not Found!`)
           .setDescription(`There was no profile tag specified so i couldn't find the user, sorry :(`)
@@ -591,7 +587,7 @@ client.on("message", async (message) => {
             }
             let embedforglogs = new Discord.MessageEmbed()
             .setTitle(`Dev log #${devlog}`)
-            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip normal to: ${usertwo.tag}`)
+            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip normal to: ${usertwo.tag} (${searchuser})`)
             .setColor("GREEN")
             let globallogs = client.channels.cache.get("872590517735682058")
             globallogs.send(embedforglogs)
@@ -615,7 +611,7 @@ client.on("message", async (message) => {
             }
             let embedforglogs = new Discord.MessageEmbed()
             .setTitle(`Dev log #${devlog}`)
-            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip gold to: ${usertwo.tag}`)
+            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip gold to: ${usertwo.tag} (${searchuser})`)
             .setColor("GREEN")
             let globallogs = client.channels.cache.get("872590517735682058")
             globallogs.send(embedforglogs)
@@ -639,11 +635,47 @@ client.on("message", async (message) => {
             }
             let embedforglogs = new Discord.MessageEmbed()
             .setTitle(`Dev log #${devlog}`)
-            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip diamond to: ${usertwo.tag}`)
+            .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave vip diamond to: ${usertwo.tag} (${searchuser})`)
             .setColor("GREEN")
             let globallogs = client.channels.cache.get("872590517735682058")
             globallogs.send(embedforglogs)
             db.add(`devlog_${client.id}`, 1)
+          }
+        }
+        else if(thing.toLowerCase() === "cash") {
+          let quantity = args[1]
+          if(!quantity) {
+            let embed = new Discord.MessageEmbed()
+            .setTitle(`No valid quantity specified`)
+            .setDescription(`Please specify a valid quantity of cash to give to someone`)
+            .setColor("RED")
+            message.channel.send(embed)
+          }
+          else {
+          if(!args[2]) {
+          let embed = new Discord.MessageEmbed()
+          .setTitle(`User Not Found!`)
+          .setDescription(`There was no profile tag specified so i couldn't find the user, sorry :(`)
+          .setColor("RED")
+          .setFooter(`Developer Tools`)
+          message.channel.send(embed)
+          }
+          else {
+          db.add(`cash_${searchuser}`, quantity)
+          let embed = new Discord.MessageEmbed()
+          .setTitle(`Successfully added cash!`)
+          .setDescription(`Successfully gave ${quantity} of cash to ${usertwo.tag}`)
+          .setColor("GREEN")
+          message.lineReply(embed)
+          let devlog = db.get(`devlog_${client.id}`)
+          let embedforglogs = new Discord.MessageEmbed()
+          .setTitle(`Dev log #${devlog}`)
+          .setDescription(`The developer ${message.author.tag} (${message.author.id}) just gave ${quantity} of cash to: ${usertwo.tag} (${searchuser})`)
+          .setColor("GREEN")
+          let globallogs = client.channels.cache.get("872590517735682058")
+          globallogs.send(embedforglogs)
+          db.add(`devlog_${client.id}`, 1)
+            }
           }
         }
       }

@@ -1,21 +1,16 @@
-//web
-const express = require("express");
-
-const app = express();
-
-app.use(express.static("public"));
-
-//404
-app.get("*", function(req, res) {
-  res.status(404).sendFile(__dirname + "/error/index.html")
-})
-
 //packages
 const Discord = require("discord.js");
 require("discord-reply");
 const client = new Discord.Client();
 const db = require("quick.db");
 const moment = require("moment");
+
+//web
+const express = require("express");
+
+const app = express();
+
+app.use(express.static("public"));
 
 //status and more
 client.on("ready", () => {
@@ -998,6 +993,11 @@ app.listen(3000, () => {
   let owner = db.get(`owner_${client.id}`)
   console.log("\x1b[31m%s\x1b[0m", `Owner - ${owner}`)
 });
+
+//404
+app.get("*", function(req, res) {
+  res.status(404).sendFile(__dirname + "/error/index.html")
+})
 
 //bot login
 const token = process.env['BotKey']

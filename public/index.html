@@ -9,25 +9,11 @@
 <body style="background-color: rgb(36, 36, 36);">
   <div style="background-color: rgb(21, 21, 21); border-radius:11px; border: 2px solid #000000; color: #dbdbdb; word-wrap: break-word; text-indent: 10px; text-align: left;">
     <a href="/commands" style="background-color:transparent;border-radius:20px; display:inline-block;cursor:pointer;color:#ffffff; font-family:fantasy;font-size:15px;padding:16px 31px;text-decoration:none; text-shadow:0px 1px 0px #2f6627;">Commands</a>
-    <button onclick="showsearchbar()" style="float: right; background-color: #151515; margin-right: 2%; position:relative;">
-      <img src="https://cdn.discordapp.com/attachments/872514306346999878/875749943044886548/copy_12900254_1.png" style="width: 10%; height: 10%">
-    </button>
-    <form id="Search" method="get" />
-    <input type="text" placeholder="Search..." id="txtsearch" style="display: block; background-color: transparent; float: right; border: 1px solid #141414; font-family: fantasy; padding: 18px 50px" size="20" maxlength="255">
   </div>
+    <div style="background-color: #151515; width: 100%; font-family: fantasy; font-size: 26px; color: #717171; position: fixed; left: 0; bottom: 0;">
+    <a href="https://discord.gg/stAxsb4XhA" style="background-color:transparent;border-radius:28px; border:1px solid #151515; display:inline-block; cursor:pointer; color:#474747; font-family:Arial; font-size:17px; padding:16px 31px; text-decoration:none; text-shadow:0px 1px 0px #2f6627; text-decoration-line: underline;">Support Server</a>
+    </div>
   <script type="text/javascript">
-  function showsearchbar() {
-    var x = document.getElementById("txtsearch");
-    if (x.style.display === "none") {
-    x.style.display = "block";
-    } else {
-    x.style.display = "none";
-    }
-    }
-    document.getElementById('Search').onsubmit = function() {
-        window.location = 'https://why.withoutideias.repl.co/' + document.getElementById('txtsearch').value;
-        return false;
-    }
 </script>
 </body>
 </html>

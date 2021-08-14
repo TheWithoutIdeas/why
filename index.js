@@ -9,7 +9,7 @@ const moment = require("moment");
 const express = require("express");
 const app = express();
 
-//Bot and website started successfully?
+//Bot and website started successfully? 
 app.listen(3000, () => {
   console.log("\x1b[32m%s\x1b[0m", 'Bot started successfully');
   console.log("\x1b[33m%s\x1b[0m", 'Website loaded successfully');
@@ -949,7 +949,7 @@ client.on("message", async (message) => {
       db.delete(`cashvip_${message.author.id}`)
     }
   }
-  if(command.toLowerCase() === "uptime") {
+  if(command.toLowerCase() === "status") {
     let totalSeconds = (client.uptime / 1000);
     let days = Math.floor(totalSeconds / 86400);
     totalSeconds %= 86400;
@@ -966,7 +966,7 @@ client.on("message", async (message) => {
     let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
     let websiteseconds = Math.floor(moment(new Date()).format("ss") - uptimewebsite1)
     let embed = new Discord.MessageEmbed()
-    .setTitle(`All Uptimes`)
+    .setTitle(`Status`)
     .setColor("PURPLE")
     .addFields(
       { name: ":robot: **__Bot Uptime__**", value: `Days - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds}`, inline: false},

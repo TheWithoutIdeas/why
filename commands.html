@@ -15,6 +15,7 @@
 		padding:8px;
     font-family: fantasy;
     float: right;
+    margin-right: 2%;
 	}
 	.commands th {
 		border:2px solid #525252;
@@ -23,6 +24,33 @@
     font-family: fantasy;
 	}
 	.commands td {
+		border:2px solid #525252;
+		padding:8px;
+		background:#b5b5b5;
+    font-family: fantasy;
+	}
+  .sidemenu {
+    float: left;
+    border: 2px solid #525252;
+    border-radius: 5px
+  }
+  .economy {
+    display: none;
+		width:50%;
+		height:100%;
+		border-collapse:collapse;
+		border-spacing:5px;
+		padding:8px;
+    font-family: fantasy;
+    float: right;
+  }
+	.economy th {
+		border:2px solid #525252;
+		padding:8px;
+		background:#999999;
+    font-family: fantasy;
+	}
+	.economy td {
 		border:2px solid #525252;
 		padding:8px;
 		background:#b5b5b5;
@@ -38,6 +66,14 @@
     <a href="https://why.withoutideias.repl.co" style="background-color:transparent;border-radius:20px; display:inline-block;cursor:pointer;color:#ffffff; font-family:fantasy;font-size:15px;padding:16px 31px;text-decoration:none; text-shadow:0px 1px 0px #2f6627;">Home</a>
     <a href="/commands" style="background-color:transparent;border-radius:20px; display:inline-block;cursor:pointer;color:#43bfde; font-family:fantasy;font-size:15px;padding:16px 31px;text-decoration:none; text-shadow:0px 1px 0px #2f6627;">Commands</a>
     <a href="https://why.withoutideias.repl.co/help" style="background-color:transparent;border-radius:20px; display:inline-block;cursor:pointer;color:#ffffff; font-family:fantasy;font-size:15px;padding:16px 31px;text-decoration:none; text-shadow:0px 1px 0px #2f6627;">Help</a>
+  </div>
+  <br>
+  </br>
+  <br>
+  </br>
+  <div>
+  <div class="sidemenu">
+  <a href="https://why.withoutideias.repl.co/commands#economy" style="background-color:transparent;border-radius:10px; display:inline-block;cursor:pointer;color:#ffffff; font-family:fantasy;font-size:15px;padding:16px 31px;text-decoration:none; text-shadow:0px 1px 0px #2f6627;">Economy</a>
   </div>
   <table class="commands" id="moderation">
 	<caption>Moderation Commands</caption>
@@ -88,10 +124,34 @@
 	</tr>
 	<tbody>
 </table>
+<table class="economy" id="economyy">
+	<caption>Economy Commands</caption>
+	<thead>
+	<tr>
+		<th>Commands</th>
+		<th>Usage</th>
+		<th>Description<br></th>
+		<th>Permissions Needed</th>
+	</tr>
+	</thead>
+	<tbody>
+		<td>!bal</td>
+		<td>&nbsp;!bal &lt;user&gt;</td>
+		<td>Sees someone's balance</td>
+		<td>&nbsp;No Specific Permission</td>
+	</tr>
+	<tbody>
+</table>
+</div>
   <div style="background-color: #151515; width: 100%; font-family: fantasy; font-size: 26px; color: #717171; position: fixed; left: 0; bottom: 0;">
     <a href="https://discord.gg/stAxsb4XhA" style="background-color:transparent;border-radius:28px; border:1px solid #151515; display:inline-block; cursor:pointer; color:#474747; font-family:Arial; font-size:17px; padding:16px 31px; text-decoration:none; text-shadow:0px 1px 0px #2f6627; text-decoration-line: underline;">Support Server</a>
     </div>
-    <script>
+    <script type="text/javascript">
+      var url = window.location.href
+      if(url.includes("economy")) {
+        document.getElementById("economyy").style.display = "inline";
+        document.getElementById("moderation").style.display = "none";
+      }
     </script>
 </body>
 </html>

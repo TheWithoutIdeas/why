@@ -7,10 +7,41 @@ const moment = require("moment");
 
 //web
 const express = require("express");
-
 const app = express();
 
-app.use(express.static("public"));
+//Bot and website started successfully?
+app.listen(3000, () => {
+  console.log("\x1b[32m%s\x1b[0m", 'Bot started successfully');
+  console.log("\x1b[33m%s\x1b[0m", 'Website loaded successfully');
+  let owner = db.get(`owner_${client.id}`)
+  console.log("\x1b[31m%s\x1b[0m", `Owner - ${owner}`)
+  let datefromstartseconds = moment(new Date()).format("ss")
+  let datefromstartminutes = moment(new Date()).format("mm")
+  let datefromstarthours = moment(new Date()).format("HH")
+  let datefromstartdays = moment(new Date()).format("DD")
+  db.set(`uptimewebsites_${client.id}`, datefromstartseconds)
+  db.set(`uptimewebsitem_${client.id}`, datefromstartminutes)
+  db.set(`uptimewebsiteh_${client.id}`, datefromstarthours)
+  db.set(`uptimewebsited_${client.id}`, datefromstartdays)
+});
+
+//pages
+app.get(`/`, function(req, res) {
+  res.sendFile(__dirname + `/home.html`)
+})
+
+app.get(`/help`, function(req, res) {
+  res.sendFile(__dirname + `/help.html`)
+})
+
+app.get(`/commands`, function(req, res) {
+  res.sendFile(__dirname + `/commands.html`)
+})
+
+//404
+app.get("*", function(req, res) {
+  res.status(404).sendFile(__dirname + "/error.html")
+})
 
 //status and more
 client.on("ready", () => {
@@ -926,10 +957,20 @@ client.on("message", async (message) => {
     totalSeconds %= 3600;
     let minutes = Math.floor(totalSeconds / 60);
     let seconds = Math.floor(totalSeconds % 60);
+    let uptimewebsite1 = db.get(`uptimewebsites_${client.id}`)
+    let uptimewebsite2 = db.get(`uptimewebsitem_${client.id}`)
+    let uptimewebsite3 = db.get(`uptimewebsiteh_${client.id}`)
+    let uptimewebsite4 = db.get(`uptimewebsited_${client.id}`)
+    let websitedays = Math.floor(moment(new Date()).format("DD") - uptimewebsite4)
+    let websitehours = Math.floor(moment(new Date()).format("HH") - uptimewebsite3)
+    let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
+    let websiteseconds = Math.floor(moment(new Date()).format("ss") - uptimewebsite1)
     let embed = new Discord.MessageEmbed()
-    .setTitle(`Uptime`)
+    .setTitle(`All Uptimes`)
     .setColor("PURPLE")
-    .setDescription(`Days - ${days} \nHours - ${hours} \nMinutes - ${minutes} \nSeconds - ${seconds}`)
+    .addFields(
+      { name: ":robot: **__Bot Uptime__**", value: `Days - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds}`, inline: false},
+      )
     .setFooter(`Non-developer uptime`)
     message.channel.send(embed)
   }
@@ -984,19 +1025,6 @@ client.on("message", async (message) => {
   if(command.toLowerCase() === "settings") {
     message.channel.send("soon")
   }
-})
-
-//Bot and website started successfully?
-app.listen(3000, () => {
-  console.log("\x1b[32m%s\x1b[0m", 'Bot started successfully');
-  console.log("\x1b[33m%s\x1b[0m", 'Website loaded successfully');
-  let owner = db.get(`owner_${client.id}`)
-  console.log("\x1b[31m%s\x1b[0m", `Owner - ${owner}`)
-});
-
-//404
-app.get("*", function(req, res) {
-  res.status(404).sendFile(__dirname + "/error/index.html")
 })
 
 //bot login

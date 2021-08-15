@@ -1050,7 +1050,16 @@ client.on("ready", ready => {
     let websitedays = Math.floor(moment(new Date()).format("DD") - uptimewebsite4)
     let websitehours = Math.floor(moment(new Date()).format("HH") - uptimewebsite3)
     let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
-    let websiteseconds = Math.floor(moment(new Date()).format("ss") - uptimewebsite1)
+    let negativeminutes = Math.sign(websiteminutes)
+    if(negativeminutes === -1) {
+      Math.abs(websiteminutes)
+    }
+    let websiteseconds = Math.floor(moment(new Date())
+    .format("ss") - uptimewebsite1)
+    let negativeseconds = Math.sign(websiteseconds)
+    if(negativeseconds === -1) {
+      Math.abs(websiteseconds)
+    }
     let embed = new Discord.MessageEmbed()
     .setTitle(`Status (for global refresh)`)
     .setColor("PURPLE")

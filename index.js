@@ -38,6 +38,10 @@ app.get(`/commands`, function(req, res) {
   res.sendFile(__dirname + `/commands.html`)
 })
 
+app.get(`/status`, function(req, res) {
+  res.sendFile(__dirname + `/status.html`)
+})
+
 //404
 app.get("*", function(req, res) {
   res.status(404).sendFile(__dirname + "/error.html")
@@ -969,7 +973,7 @@ client.on("message", async (message) => {
     .setTitle(`Status`)
     .setColor("PURPLE")
     .addFields(
-      { name: ":robot: **__Bot Uptime__**", value: `Days - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds}`, inline: false},
+      { name: ":robot: **__Bot Uptime__**", value: `Days - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds} \n**Note: If the uptime is a little buggy, just wait 2 minutes for it to refresh**`, inline: false},
       )
     .setFooter(`Non-developer uptime`)
     message.channel.send(embed)
@@ -1025,6 +1029,43 @@ client.on("message", async (message) => {
   if(command.toLowerCase() === "settings") {
     message.channel.send("soon")
   }
+})
+
+//uptime refresh
+client.on("ready", ready => {
+  setInterval(function() {
+    let a = db.get(`statussend_${client.id}`)
+    if(!a) {
+    let totalSeconds = (client.uptime / 1000);
+    let days = Math.floor(totalSeconds / 86400);
+    totalSeconds %= 86400;
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = Math.floor(totalSeconds % 60);
+    let uptimewebsite1 = db.get(`uptimewebsites_${client.id}`)
+    let uptimewebsite2 = db.get(`uptimewebsitem_${client.id}`)
+    let uptimewebsite3 = db.get(`uptimewebsiteh_${client.id}`)
+    let uptimewebsite4 = db.get(`uptimewebsited_${client.id}`)
+    let websitedays = Math.floor(moment(new Date()).format("DD") - uptimewebsite4)
+    let websitehours = Math.floor(moment(new Date()).format("HH") - uptimewebsite3)
+    let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
+    let websiteseconds = Math.floor(moment(new Date()).format("ss") - uptimewebsite1)
+    let embed = new Discord.MessageEmbed()
+    .setTitle(`Status (for global refresh)`)
+    .setColor("PURPLE")
+    .addFields(
+      { name: ":robot: **__Bot Uptime__**", value: `Days - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds} \n**Note: If the uptime is a little buggy, just wait 2 minutes for it to refresh**`, inline: false},
+      )
+    .setFooter(`Developer uptime`)
+    let globallogs = client.channels.cache.get("876473500850868245")
+    globallogs.send(embed)
+    db.set(`statussend_${client.id}`, true)
+    }
+    if(db.get(`statussend_${client.id}`) === true) {
+    db.delete(`statussend_${client.id}`)
+    }
+  }, 120000)
 })
 
 //bot login

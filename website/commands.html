@@ -73,7 +73,7 @@
   </br>
   <div>
   <div class="sidemenu">
-  <a href="https://why.withoutideias.repl.co/commands#economy" style="background-color:transparent;border-radius:10px; display:inline-block;cursor:pointer;color:#ffffff; font-family:fantasy;font-size:15px;padding:16px 31px;text-decoration:none; text-shadow:0px 1px 0px #2f6627;">Economy</a>
+  <a href="https://why.withoutideias.repl.co/commands#economy" style="background-color:transparent;border-radius:10px; display:inline-block;cursor:pointer;color:#ffffff; font-family:fantasy;font-size:15px;padding:16px 31px;text-decoration:none; text-shadow:0px 1px 0px #2f6627;" onclick="submit()">Economy</a>
   </div>
   <table class="commands" id="moderation">
 	<caption>Moderation Commands</caption>
@@ -147,11 +147,10 @@
     <a href="https://discord.gg/stAxsb4XhA" style="background-color:transparent;border-radius:28px; border:1px solid #151515; display:inline-block; cursor:pointer; color:#474747; font-family:Arial; font-size:17px; padding:16px 31px; text-decoration:none; text-shadow:0px 1px 0px #2f6627; text-decoration-line: underline;">Support Server</a>
     </div>
     <script type="text/javascript">
-      var url = window.location.href
-      if(url.includes("economy")) {
-        document.getElementById("economyy").style.display = "inline";
-        document.getElementById("moderation").style.display = "none";
-      }
+    function submit() {
+      document.getElementById("economyy").style.display = "inline"
+      document.getElementById("moderation").style.display = "none"
+    }
     </script>
 </body>
 </html>

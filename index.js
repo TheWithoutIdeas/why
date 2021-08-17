@@ -982,6 +982,12 @@ client.on("message", async (message) => {
     let websitehours = Math.floor(moment(new Date()).format("HH") - uptimewebsite3)
     let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
     let websiteseconds = Math.floor(moment(new Date()).format("ss") - uptimewebsite1)
+    let serverping2 = db.get(`serverping_${client.id}`)
+    let ping2 = Math.round(client.ws.ping);
+    if(websitehours < 0) {
+      websitehours = Math.floor(24 - Math.abs(websitehours))
+      websitedays = Math.floor(websitedays-1)
+    }
     if(websiteminutes < 0) {
       websiteminutes = Math.floor(60 - Math.abs(websiteminutes))
       websitehours = Math.floor(websitehours-1)
@@ -994,9 +1000,11 @@ client.on("message", async (message) => {
     .setTitle(`Status`)
     .setColor("PURPLE")
     .addFields(
-      { name: ":robot: **__Bot Uptime__**", value: `Days - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds} \n**Note: If the uptime is a little buggy, just wait 2 minutes for it to refresh**`, inline: false},
+      { name: "**__Uptimes status__**", value: `:robot: **__Bot Uptime__** \nDays - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds}`, inline: false},
+      { name: "**__Ping Status__**", value: `:robot: **__Bot Ping__** \nAPI Ping - **${ping2}** \n\n<:Website:876209693511516230> **__Website Ping__** \n**${serverping2}ms**!`}
       )
-    .setFooter(`Non-developer uptime`)
+    .setFooter(`NON-Developer uptime \nNote: If the uptime is a little buggy, wait a bit or contact the developers`)
+    .setTimestamp()
     message.channel.send(embed)
   }
   if(command.toLowerCase() === "help") {
@@ -1096,6 +1104,7 @@ client.on("ready", ready => {
       { name: "**__Ping Status__**", value: `:robot: **__Bot Ping__** \nAPI Ping - **${ping2}** \n\n<:Website:876209693511516230> **__Website Ping__** - \n**${serverping2}ms**!`}
       )
     .setFooter(`Developer uptime \nNote: If the uptime is a little buggy, wait a bit or contact the developers`)
+    .setTimestamp()
     let globallogs = client.channels.cache.get("876934081894567977")
     globallogs.send(embed).then(message => {
       setInterval(function() {
@@ -1137,6 +1146,7 @@ client.on("ready", ready => {
       { name: "**__Ping Status__**", value: `:robot: **__Bot Ping__** \nAPI Ping - **${ping2}** \n\n<:Website:876209693511516230> **__Website Ping__** \n**${serverping2}ms**!`}
       )
     .setFooter(`Developer uptime \nNote: If the uptime is a little buggy, wait a bit or contact the developers`)
+    .setTimestamp()
       message.edit(newembed)
       }, 10000)
     })

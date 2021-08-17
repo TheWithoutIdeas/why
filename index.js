@@ -4,12 +4,13 @@ require("discord-reply");
 const client = new Discord.Client();
 const db = require("quick.db");
 const moment = require("moment");
+const ms = require("ms")
 
 //web
 const express = require("express");
 const app = express();
 
-//Bot and website started successfully? 
+//Bot and website startup
 app.listen(3000, () => {
   console.log("\x1b[32m%s\x1b[0m", 'Bot started successfully');
   console.log("\x1b[33m%s\x1b[0m", 'Website loaded successfully');
@@ -23,28 +24,30 @@ app.listen(3000, () => {
   db.set(`uptimewebsitem_${client.id}`, datefromstartminutes)
   db.set(`uptimewebsiteh_${client.id}`, datefromstarthours)
   db.set(`uptimewebsited_${client.id}`, datefromstartdays)
+  const newdateforserverping = Date.now()
+  db.set(`newdateforserverping_${client.id}`, newdateforserverping)
 });
 
 //pages
 app.get(`/`, function(req, res) {
-  res.sendFile(__dirname + `/index.html`)
+  res.sendFile(__dirname + `/website/index.html`)
 })
 
 app.get(`/help`, function(req, res) {
-  res.sendFile(__dirname + `/help.html`)
+  res.sendFile(__dirname + `/website/help.html`)
 })
 
 app.get(`/commands`, function(req, res) {
-  res.sendFile(__dirname + `/commands.html`)
+  res.sendFile(__dirname + `/website/commands.html`)
 })
 
 app.get(`/status`, function(req, res) {
-  res.sendFile(__dirname + `/status.html`)
+  res.sendFile(__dirname + `/website/status.html`)
 })
 
 //404
 app.get("*", function(req, res) {
-  res.status(404).sendFile(__dirname + "/error.html")
+  res.status(404).sendFile(__dirname + "/website/error.html")
 })
 
 //status and more
@@ -202,9 +205,10 @@ client.on("message", async (message) => {
     .setColor("GREEN");
     let ping = Date.now() - message.createdTimestamp;
     let ping2 = Math.round(client.ws.ping);
+    let serverping = db.get(`serverping_${client.id}`)
     let pong = new Discord.MessageEmbed()
     .setTitle(`PONG`)
-    .setDescription(`🏓 Latency - \`\`${ping}\`\`ms \n🤖 Api Latency - \`\`${ping2}\`\`ms`);
+    .setDescription(`🏓 Latency - \`\`${ping}\`\`ms \n🤖 Api Latency - \`\`${ping2}\`\`ms \n<:Website:876209693511516230> Website Ping - \`\`${serverping}\`\`ms`);
     if(ping <= 150) {
       pong.setFooter(`Fast response!`)
       pong.setColor("GREEN")
@@ -572,6 +576,15 @@ client.on("message", async (message) => {
       .setThumbnail(`https://cdn.discordapp.com/attachments/872514306346999878/872514337821044746/sad_face_1_adobespark.png`)
       message.channel.send(embed)
     }
+  }
+  if(command.toLowerCase() === "mute") {
+    let user = message.mentions.users.first()
+    let time = args[1]
+    if(!user) {
+      user = message.author
+      time = args[0]
+    }
+    let mutetime = ms(time)
   }
   if(command.toLowerCase() === "devgive") {
     let author = message.author
@@ -969,6 +982,14 @@ client.on("message", async (message) => {
     let websitehours = Math.floor(moment(new Date()).format("HH") - uptimewebsite3)
     let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
     let websiteseconds = Math.floor(moment(new Date()).format("ss") - uptimewebsite1)
+    if(websiteminutes < 0) {
+      websiteminutes = Math.floor(60 - Math.abs(websiteminutes))
+      websitehours = Math.floor(websitehours-1)
+    }
+    if(websiteseconds < 0) {
+      websiteseconds = Math.floor(60 - Math.abs(websiteseconds))
+      websiteminutes = Math.floor(websiteminutes-1)
+    }
     let embed = new Discord.MessageEmbed()
     .setTitle(`Status`)
     .setColor("PURPLE")
@@ -1033,9 +1054,51 @@ client.on("message", async (message) => {
 
 //uptime refresh
 client.on("ready", ready => {
-  setInterval(function() {
-    let a = db.get(`statussend_${client.id}`)
-    if(!a) {
+  let totalSeconds = (client.uptime / 1000);
+    let days = Math.floor(totalSeconds / 86400);
+    totalSeconds %= 86400;
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = Math.floor(totalSeconds % 60);
+    let uptimewebsite1 = db.get(`uptimewebsites_${client.id}`)
+    let uptimewebsite2 = db.get(`uptimewebsitem_${client.id}`)
+    let uptimewebsite3 = db.get(`uptimewebsiteh_${client.id}`)
+    let uptimewebsite4 = db.get(`uptimewebsited_${client.id}`)
+    let websitedays = Math.floor(moment(new Date()).format("DD") - uptimewebsite4)
+    let websitehours = Math.floor(moment(new Date()).format("HH") - uptimewebsite3)
+    let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
+    let websiteseconds = Math.floor(moment(new Date())
+    .format("ss") - uptimewebsite1)
+    let serverping = db.get(`newdateforserverping_${client.id}`)
+    let newdate = Date.now()
+    let serverping1 = Math.floor(newdate - serverping)
+    db.set(`serverping_${client.id}`, serverping1)
+    let serverping2 = db.get(`serverping_${client.id}`)
+    if(websitehours < 0) {
+      websitehours = Math.floor(24 - Math.abs(websitehours))
+      websitedays = Math.floor(websitedays-1)
+    }
+    if(websiteminutes < 0) {
+      websiteminutes = Math.floor(60 - Math.abs(websiteminutes))
+      websitehours = Math.floor(websitehours-1)
+    }
+    if(websiteseconds < 0) {
+      websiteseconds = Math.floor(60 - Math.abs(websiteseconds))
+      websiteminutes = Math.floor(websiteminutes-1)
+    }
+    let ping2 = Math.round(client.ws.ping);
+    let embed = new Discord.MessageEmbed()
+    .setTitle(`Status (for developer analysis)`)
+    .setColor("PURPLE")
+    .addFields(
+      { name: "**__Uptimes status__**", value: `:robot: **__Bot Uptime__** \nDays - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds}`, inline: false},
+      { name: "**__Ping Status__**", value: `:robot: **__Bot Ping__** \nAPI Ping - **${ping2}** \n\n<:Website:876209693511516230> **__Website Ping__** - \n**${serverping2}ms**!`}
+      )
+    .setFooter(`Developer uptime \nNote: If the uptime is a little buggy, wait a bit or contact the developers`)
+    let globallogs = client.channels.cache.get("876934081894567977")
+    globallogs.send(embed).then(message => {
+      setInterval(function() {
     let totalSeconds = (client.uptime / 1000);
     let days = Math.floor(totalSeconds / 86400);
     totalSeconds %= 86400;
@@ -1050,31 +1113,33 @@ client.on("ready", ready => {
     let websitedays = Math.floor(moment(new Date()).format("DD") - uptimewebsite4)
     let websitehours = Math.floor(moment(new Date()).format("HH") - uptimewebsite3)
     let websiteminutes = Math.floor(moment(new Date()).format("mm") - uptimewebsite2)
-    let negativeminutes = Math.sign(websiteminutes)
-    if(negativeminutes === -1) {
-      Math.abs(websiteminutes)
-    }
     let websiteseconds = Math.floor(moment(new Date())
     .format("ss") - uptimewebsite1)
-    let negativeseconds = Math.sign(websiteseconds)
-    if(negativeseconds === -1) {
-      Math.abs(websiteseconds)
+    let serverping2 = db.get(`serverping_${client.id}`)
+    let ping2 = Math.round(client.ws.ping);
+    if(websitehours < 0) {
+      websitehours = Math.floor(24 - Math.abs(websitehours))
+      websitedays = Math.floor(websitedays-1)
     }
-    let embed = new Discord.MessageEmbed()
-    .setTitle(`Status (for global refresh)`)
+    if(websiteminutes < 0) {
+      websiteminutes = Math.floor(60 - Math.abs(websiteminutes))
+      websitehours = Math.floor(websitehours-1)
+    }
+    if(websiteseconds < 0) {
+      websiteseconds = Math.floor(60 - Math.abs(websiteseconds))
+      websiteminutes = Math.floor(websiteminutes-1)
+    }
+    let newembed = new Discord.MessageEmbed()
+    .setTitle(`Status (for developer analysis)`)
     .setColor("PURPLE")
     .addFields(
-      { name: ":robot: **__Bot Uptime__**", value: `Days - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds} \n**Note: If the uptime is a little buggy, just wait 2 minutes for it to refresh**`, inline: false},
+      { name: "**__Uptimes status__**", value: `:robot: **__Bot Uptime__** \nDays - ${days} | Hours - ${hours} | Minutes - ${minutes} | Seconds - ${seconds} \n\n<:Website:876209693511516230> [**__Website Uptime__**](https://why.withoutideias.repl.co) \nDays - ${websitedays} | Hours - ${websitehours} | Minutes - ${websiteminutes} | Seconds - ${websiteseconds}`, inline: false},
+      { name: "**__Ping Status__**", value: `:robot: **__Bot Ping__** \nAPI Ping - **${ping2}** \n\n<:Website:876209693511516230> **__Website Ping__** \n**${serverping2}ms**!`}
       )
-    .setFooter(`Developer uptime`)
-    let globallogs = client.channels.cache.get("876473500850868245")
-    globallogs.send(embed)
-    db.set(`statussend_${client.id}`, true)
-    }
-    if(db.get(`statussend_${client.id}`) === true) {
-    db.delete(`statussend_${client.id}`)
-    }
-  }, 120000)
+    .setFooter(`Developer uptime \nNote: If the uptime is a little buggy, wait a bit or contact the developers`)
+      message.edit(newembed)
+      }, 10000)
+    })
 })
 
 //bot login
